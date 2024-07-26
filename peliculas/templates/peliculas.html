@@ -1,0 +1,70 @@
+{% extends "plantilla.html" %}
+
+{% block content%}
+
+    {%if messages%}
+
+        {% for message in messages %}
+            <div class="alert alert-success"> {{message}}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h2 class="text-center">Peliculas</h2>
+
+    <form class="w-50 shadow mx-auto p-4 m-3" method="post" action="Peliculas/guardar">
+        {% csrf_token %}
+        Titulo: <input type="text" name="titulo" class="form-control my-2" required>
+
+        Director: <input type="text" name="director" class="form-control my-2" required>
+
+        Año: <input type="text" name="anio" class="form-control my-2" required>
+
+        Protagonista: <input type="text" name="Protagonista" class="form-control my-2" required>
+
+        <input type="submit" value="guardar" class="btn btn-primary my-2">
+
+        <a href="{% url 'inicio'%}" class="btn btn-secondary my-2">Cancelar</a>
+    </form>
+
+
+    <div class="row">
+        <table class="table table-light w-75 mx-auto text-center">
+
+            <tr class="table-dark">
+                <th>Título</th>
+                <th>Director</th>
+                <th>Año</th>
+                <th>Protagonista</th>
+                <th colspan="2"></th>
+            </tr>
+
+        {% for pelicula in peliculas %}
+
+            <tr>
+                <td>{{ pelicula.titulo }}</td>
+                <td>{{ pelicula.director }}</td>
+                <td>{{ pelicula.anio }}</td>
+                <td>{{pelicula.Protagonista}}</td>
+                <td>
+                     <form action="{%url 'eliminar' pelicula.id %}" method="post">
+                        {%csrf_token%}
+                        <button class="btn btn-danger" onclick="return confirm('Deseas eliminar esta pelicula?')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                     </form>
+                </td>
+                <td>
+                    <form action="{%url 'detalle' pelicula.id %}" method="post">
+                       {%csrf_token%}
+                       <button class="btn btn-warning">
+                           <i class="fas fa-edit"></i>
+                       </button>
+                    </form>
+            </tr>
+
+           
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "plantilla.html" %}
+
+{% block content%}
+
+    <h2 class="text-center">Peliculas</h2>
+
+    <form class="w-50 shadow mx-auto p-4 m-3" method="post" action="{%url 'editar' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="id" value="{{pelicula.id}}">
+
+        Titulo: <input type="text" name="titulo" class="form-control my-2" required value={{pelicula.titulo}}>
+
+        Director: <input type="text" name="director" class="form-control my-2" required value={{pelicula.director}} >
+
+        Año: <input type="text" name="anio" class="form-control my-2" required value={{pelicula.anio}}>
+
+        Protagonista: <input type="text" name="Protagonista" class="form-control my-2" required value={{pelicula.Protagonista}}>
+
+        <input type="submit" value="guardar" class="btn btn-warning my-2">
+
+        <a href="{% url 'inicio'%}" class="btn btn-secondary my-2">Cancelar</a>
+    </form>
+
+
+   
+
+{% endblock %}
